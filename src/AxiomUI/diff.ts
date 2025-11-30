@@ -1,6 +1,6 @@
 export function diff(
 	oldElement: HTMLElement,
-	newElement: HTMLElement
+	newElement: HTMLElement,
 ): HTMLElement {
 	if (oldElement.tagName !== newElement.tagName) {
 		const clonedNewElement = newElement.cloneNode(true) as HTMLElement;
@@ -21,7 +21,6 @@ function mergeAttributes(oldElement: HTMLElement, newElement: HTMLElement) {
 
 	for (const attr of oldAttrs) {
 		if (!newElement.hasAttribute(attr.name)) {
-			console.log(newElement.attributes);
 			oldElement.removeAttribute(attr.name);
 		}
 	}

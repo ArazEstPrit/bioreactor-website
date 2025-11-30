@@ -53,10 +53,10 @@ const formatDate: ComponentHandlerHelpers["formatDate"] = (date, template) => {
 		YY: format({ year: "2-digit" }),
 		HH: format({ hour: "2-digit" }),
 		H: format({ hour: "numeric" }),
-		// The LocaleString thing doesn't work with 2-digit minutes for some reason.
+		// The LocaleString thing doesn't work with 2-digit minutes and seconds for some reason.
 		mm: String(date.getMinutes()).padStart(2, "0"),
 		m: format({ minute: "numeric" }),
-		ss: format({ second: "2-digit" }),
+		ss: String(date.getSeconds()).padStart(2, "0"),
 		s: format({ second: "numeric" }),
 	};
 	const keys = Object.keys(values).sort((a, b) => b.length - a.length);

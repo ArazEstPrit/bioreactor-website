@@ -65,10 +65,15 @@ export default class AxiomUI {
 				i =>
 					i.type === component.type &&
 					deepEqual(component.props, i.props) &&
-					deepEqual(componentInstance.mixins, i.mixins),
+					deepEqual(component.mixins || [], i.mixins),
 			) as ComponentInstance<T, M>;
 
-			if (identicalInstance) return identicalInstance;
+			if (identicalInstance) {
+				const element = identicalInstance.element.cloneNode(true);
+
+				identicalInstance.element.replaceWith(element);
+				return identicalInstance;
+			}
 
 			componentInstance.parentInstance = parent;
 			parent.childInstances.push(componentInstance);
@@ -172,9 +177,8 @@ export default class AxiomUI {
 			componentInstance.element = diff(oldElement, newElement);
 
 		const parentInstance = componentInstance.parentInstance;
-		if (parentInstance && parentInstance.element == oldElement) {
+		if (parentInstance && parentInstance.element == oldElement)
 			parentInstance.element = componentInstance.element;
-		}
 
 		this.renderStack.pop();
 	}

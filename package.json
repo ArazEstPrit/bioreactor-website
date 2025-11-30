@@ -16,6 +16,6 @@
     "vite": "^7.2.4"
   },
   "imports": {
-	"#components": "./src/AxiomUI/types.ts"
+	"#ui-types": "./src/AxiomUI/types.ts"
   }
 }

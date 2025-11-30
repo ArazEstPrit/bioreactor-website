@@ -1,4 +1,5 @@
 import AxiomUI from "./AxiomUI/AxiomUI";
+import { dashboard } from "./dashboard";
 import "./index.css";
 import mqtt from "mqtt";
 
@@ -7,33 +8,15 @@ import mqtt from "mqtt";
 // const client = mqtt.connect("mqtt://engf0001.cs.ucl.ac.uk");
 const client = mqtt.connect("wss://test.mosquitto.org:8081");
 
-AxiomUI.addType("app", {
-	render: ({ props }, { el }) =>
-		el(
-			"div",
-			{ id: "app" },
-			el("h1", {}, "bioreactor"),
-			el("pre", {}, props.reactor),
-		),
-});
-
-const app = AxiomUI.render({ type: "app", props: { reactor: "" } });
-
-document.body.append(app.element);
+document.body.append(dashboard.element);
 
 client.on("connect", () => {
 	// client.subscribe("bioreactor_sim/nofaults/telemetry/summary");
-	client.subscribe("bioreactor/#");
+	client.subscribe("bioreactor/summary");
 });
 
-client.on("message", (topic, message) => {
-	app.props.reactor = String(message);
+client.on("message", (_, message) => {
+	dashboard.props.reactor = JSON.parse("" + message);
 });
 
-declare module "#components" {
-	interface ComponentPropMap {
-		app: {
-			reactor: string;
-		};
-	}
-}
+window["AxiomUI"] = AxiomUI;
