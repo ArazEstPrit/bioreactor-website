@@ -5,7 +5,7 @@ import mqtt from "mqtt";
 // Can't connect to dummy client directly because it only supports mqtt, which
 // we can't connect to from the browser
 // const client = mqtt.connect("mqtt://engf0001.cs.ucl.ac.uk");
-const client = mqtt.connect("ws://test.mosquitto.org:8080");
+const client = mqtt.connect("wss://test.mosquitto.org:8081");
 
 AxiomUI.addType("app", {
 	render: ({ props }, { el }) =>
