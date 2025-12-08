@@ -17,7 +17,7 @@
 
 h1 {
 	margin: 0;
-	font-size: 4em;
+	font-size: 3.5em;
 }
 
 h2 {
@@ -40,14 +40,11 @@ body {
 
 
 	--p: 48px;
+	margin: 0;
 	padding: var(--p);
-	width: calc(100vw - var(--p));
+	min-width: calc(100vw - var(--p));
 	min-height: calc(100vh - var(--p));
 	box-sizing: border-box;
-
-	display: flex;
-	justify-content: center;
-	align-items: center;
 
 
 	--t: rgb(from var(--black) r g b / 0.2);
@@ -85,29 +82,48 @@ body {
 	}
 }
 
-button {
+a,
+button,
+label {
 	--border-width: 4px;
 	appearance: none;
+	padding: 2px 12px;
+
+	color: var(--black);
+	text-decoration: none;
+
+	cursor: default;
 }
 
-body {
-	container-type: size;
+:is(input, a, button):focus {
+	outline: none;
 }
 
-#dashboard {
+.dashboard {
 	padding: 48px;
 	background-color: var(--white);
 	--border-width: 8px;
 
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: 50% 50%;
 
 	gap: 24px;
+
+	max-width: 1500px;
+
+	margin: auto;
 }
 
-@container (width < 850px) {
-	#dashboard {
-		grid-template-columns: 1fr;
+@media screen and (width < 950px) {
+	.dashboard {
+		grid-template-columns: 100%;
+	}
+}
+
+@media screen and (width < 700px) {
+	body {
+		padding-left: 0px;
+		padding-right: 0px;
 	}
 }
 
@@ -124,4 +140,74 @@ body {
 		display: flex;
 		gap: 18px;
 	}
+}
+
+.subsystem {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+
+	.header {
+		display: flex;
+		justify-content: space-between;
+
+		border-bottom: 4px solid var(--black);
+	}
+
+	.chart {
+		transition: 0ms;
+	}
+}
+
+.actions {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+
+	.setpoints {
+		display: flex;
+		justify-content: space-around;
+		width: 100%;
+		height: 92px;
+		--border-width: 4px;
+	}
+
+	.setpoint {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	input {
+		width: 70%;
+	}
+
+	.buttons {
+		margin-top: -16px;
+		margin-right: -4px;
+	}
+}
+
+.curr {
+	margin-left: 16px;
+}
+
+body {
+	#dashboard-yes-data {
+		display: none;
+	}
+}
+
+body[data-data=true] {
+	#dashboard-no-data {
+		display: none;
+	}
+
+	#dashboard-yes-data {
+		display: grid;
+	}
+}
+
+.err {
+	--black: #E41012
 }

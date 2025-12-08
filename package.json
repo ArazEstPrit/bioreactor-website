@@ -9,13 +9,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "apexcharts": "^5.3.6",
+    "chart.js": "^4.5.1",
     "mqtt": "^5.14.1"
   },
   "devDependencies": {
     "typescript": "~5.9.3",
     "vite": "^7.2.4"
   },
-  "imports": {
-	"#ui-types": "./src/AxiomUI/types.ts"
-  }
 }
