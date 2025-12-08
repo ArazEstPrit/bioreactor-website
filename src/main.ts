@@ -24,10 +24,17 @@ const updateButton = document.querySelector("#update");
 const client = mqtt.connect(
 	"wss://f8fdbc98599e479394681fe41965c329.s1.eu.hivemq.cloud:8884/mqtt",
 	{
-		username: "test1",
-		password: "Test1234",
+		username: "Username1234",
+		password: prompt("Input Password:"),
 	},
 );
+
+client.on("error", err => {
+	if ((err as mqtt.ErrorWithReasonCode).code == 5) {
+		alert("Wrong Password. Please try again");
+		location.reload();
+	}
+});
 
 client.on("connect", () => {
 	client.subscribe("bioreactor/data", { qos: 1 });
