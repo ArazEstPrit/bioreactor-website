@@ -38,6 +38,7 @@ client.on("error", err => {
 
 client.on("connect", () => {
 	client.subscribe("bioreactor/data", { qos: 1 });
+	client.subscribe("esp32/LastWill", { qos: 1 });
 });
 
 const sharedConfig = (name: string) => ({
@@ -150,7 +151,15 @@ if (existingData) {
 	update();
 }
 
-client.on("message", (_, message) => {
+client.on("message", (topic, message) => {
+	if (topic == "esp32/LastWill") {
+		alert("Bioreactor disconnected!");
+		location.reload();
+		return;
+	}
+
+	if (message.length == 0) return;
+
 	document.body.setAttribute("data-data", "true");
 
 	const newData = JSON.parse("" + message);
@@ -280,7 +289,7 @@ updateButton.addEventListener("mousedown", () => {
 		else err(tempIn);
 
 	if (rpm)
-		if (rpm >= 1000 && rpm <= 1500)
+		if (rpm >= 300 && rpm <= 1500)
 			client.publish("bioreactor/target_RPM", rpmIn.value + "");
 		else err(rpmIn);
 
